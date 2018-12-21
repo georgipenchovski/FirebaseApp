@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
@@ -101,6 +102,7 @@ public class MainActivity extends BaseActivity implements MainUsecase.ViewListen
 
     @Override
     public void logoutSuccess() {
+        Log.e(TAG, "logoutSuccess");
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }

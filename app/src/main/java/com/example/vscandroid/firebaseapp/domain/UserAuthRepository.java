@@ -18,6 +18,10 @@ public interface UserAuthRepository {
 
     void signOut();
 
+    void resetPassword(String email);
+
+    void addResetPasswordListener(ResetPasswordListener resetPasswordListener);
+
     interface SignOutListener {
         void onUserInstanceReceived(FirebaseAuth mAuth);
     }
@@ -34,5 +38,12 @@ public interface UserAuthRepository {
         void onSignUpSuccessful(String userId);
 
         void onSignUpError();
+    }
+    interface ResetPasswordListener {
+        
+        void onResetSuccess();
+        
+        void onResetError();
+        
     }
 }

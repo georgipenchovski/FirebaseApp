@@ -20,6 +20,7 @@ import butterknife.BindView;
 
 public class LoginActivity extends BaseActivity implements LoginUsecase.ViewListener {
 
+    private static final String TAG = "LoginActivity";
     @Inject LoginUsecase usecase;
 
     @BindView(R.id.email) EditText inputEmail;

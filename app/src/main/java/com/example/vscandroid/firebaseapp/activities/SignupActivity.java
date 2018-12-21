@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.vscandroid.firebaseapp.R;
 import com.example.vscandroid.firebaseapp.domain.usecases.SignUpUsecase;
 import com.example.vscandroid.firebaseapp.injection.component.ActivityComponent;
+import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
@@ -30,13 +31,13 @@ public class SignUpActivity extends BaseActivity implements SignUpUsecase.ViewLi
     @BindView(R.id.btn_reset_password) MaterialButton btnResetPassword;
     @BindView(R.id.progressBar) ProgressBar progressBar;
 
-//    private FirebaseAuth auth;
+  //  private FirebaseAuth auth;
 
 
     @Override
     protected void onViewCreated() {
         usecase.setViewListener(this);
-//        auth = FirebaseAuth.getInstance();
+  //      auth = FirebaseAuth.getInstance();
 
         btnSignIn = findViewById(R.id.sign_in_button);
         btnSignUp = findViewById(R.id.sign_up_button);
@@ -105,7 +106,6 @@ public class SignUpActivity extends BaseActivity implements SignUpUsecase.ViewLi
                 }
 
                 usecase.registerUser(email, password, username, phoneNumber);
-
             }
         });
     }

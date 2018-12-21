@@ -2,6 +2,7 @@ package com.example.vscandroid.firebaseapp.domain.usecases;
 
 import com.example.vscandroid.firebaseapp.activities.SignUpActivity;
 import com.example.vscandroid.firebaseapp.database.remote.FirebaseAuthRepository;
+import com.example.vscandroid.firebaseapp.database.remote.FirebaseDataRepository;
 import com.example.vscandroid.firebaseapp.domain.UserAuthRepository;
 import com.example.vscandroid.firebaseapp.domain.UserDataRepository;
 
@@ -17,6 +18,7 @@ public class SignUpUsecase {
     @Inject
     SignUpUsecase() {
         userAuthRepository = FirebaseAuthRepository.getInstance();
+        userDataRepository = new FirebaseDataRepository();
     }
 
     public void setViewListener(SignUpActivity viewListener) {
@@ -59,7 +61,7 @@ public class SignUpUsecase {
     }
 
     public void addUser(String username, String userPhone, String userEmail) {
-        userDataRepository.addUser(username, userPhone, userEmail);
+       userDataRepository.addUser(username, userPhone, userEmail);
     }
 
 

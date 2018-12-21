@@ -13,13 +13,18 @@ import android.widget.Toast;
 
 
 import com.example.vscandroid.firebaseapp.R;
+import com.example.vscandroid.firebaseapp.domain.usecases.ResetPasswordUsecase;
 import com.example.vscandroid.firebaseapp.injection.component.ActivityComponent;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ResetPasswordActivity extends BaseActivity {
+import javax.inject.Inject;
 
+public class ResetPasswordActivity extends BaseActivity implements ResetPasswordUsecase.ViewListener {
+
+    @Inject
+    ResetPasswordUsecase usecase;
     private EditText inputEmail;
     private MaterialButton btnReset, btnBack;
     private FirebaseAuth auth;
@@ -28,6 +33,7 @@ public class ResetPasswordActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        usecase.setViewListener(this);
 
         inputEmail = findViewById(R.id.email);
         btnReset = findViewById(R.id.btn_reset_password);
@@ -55,24 +61,7 @@ public class ResetPasswordActivity extends BaseActivity {
                     return;
                 }
 
-                progressBar.setVisibility(View.VISIBLE);
-                auth.sendPasswordResetEmail(email)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(ResetPasswordActivity.this,
-                                            "We have sent you instructions to reset your password!",
-                                            Toast.LENGTH_SHORT).show();
-                                } else {
-                                    Toast.makeText(ResetPasswordActivity.this,
-                                            "Failed to send reset email!",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-
-                                progressBar.setVisibility(View.GONE);
-                            }
-                        });
+                usecase.resetPassword(email);
             }
         });
     }
@@ -89,6 +78,30 @@ public class ResetPasswordActivity extends BaseActivity {
 
     @Override
     protected void doInject(ActivityComponent activityComponent) {
+        activityComponent.inject(this);
+    }
 
+    @Override
+    public void showResetPasswordSuccess() {
+        Toast.makeText(ResetPasswordActivity.this,
+                "We have sent you instructions to reset your password!",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showResetPasswordError() {
+        Toast.makeText(ResetPasswordActivity.this,
+                "Failed to send reset email!",
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
     }
 }

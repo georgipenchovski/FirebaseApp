@@ -1,11 +1,16 @@
 package com.example.vscandroid.firebaseapp.domain.usecases;
 
+import android.util.Log;
+
 import com.example.vscandroid.firebaseapp.database.remote.FirebaseAuthRepository;
 import com.example.vscandroid.firebaseapp.domain.UserAuthRepository;
+import com.google.firebase.auth.FirebaseAuth;
 
 import javax.inject.Inject;
 
 public class MainUsecase {
+
+    private static final String TAG = "MainUsecase";
 
     private UserAuthRepository userAuthRepository;
     private ViewListener viewListener;
@@ -21,6 +26,7 @@ public class MainUsecase {
 
     public void signOut() {
         userAuthRepository.signOut();
+        Log.e(TAG, String.valueOf("signOut: " + FirebaseAuth.getInstance().getCurrentUser() == null));
         viewListener.logoutSuccess();
     }
 
