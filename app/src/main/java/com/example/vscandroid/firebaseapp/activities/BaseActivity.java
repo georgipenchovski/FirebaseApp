@@ -11,15 +11,13 @@ import com.example.vscandroid.firebaseapp.injection.module.ActivityModule;
 import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity {
-
     private ActivityComponent mActivityComponent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setContentView(getLayoutRes());
-//        doInject(getActivityComponent());
+        doInject(getActivityComponent());
         ButterKnife.bind(this);
         onViewCreated();
     }
@@ -32,12 +30,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private ActivityComponent getActivityComponent() {
         if (mActivityComponent == null) {
-//            mActivityComponent = DaggerActivityComponent.builder()
-//                    .activityModule(new ActivityModule(this))
-//                    .applicationComponent(BaseApplication.get(this).getComponent())
-//                    .build();
+            mActivityComponent = DaggerActivityComponent.builder()
+                    .activityModule(new ActivityModule(this))
+                    .applicationComponent(BaseApplication.get(this).getComponent())
+                    .build();
         }
         return mActivityComponent;
+    }
+
+    protected BaseActivity getActivity() {
+        return this;
     }
 }
 

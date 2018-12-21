@@ -4,23 +4,19 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public interface UserAuthRepository {
 
-    void registerUser(String email, String password, String name, int result);
+    void registerUser(String email, String password, String username, String phoneNumber);
 
     void loginUserByEmail(String email, String password);
 
-    void loginUserAnonymously();
-
-    void linkUserWithCredential(String email, String password, String name, int result);
-
     void addSignInListener(SignInListener signInListener);
+
+    void addSignUpListener(SignUpListener signUpListener);
 
     void removeSignInListener();
 
     void getCurrentUser(SignOutListener signOutListener);
 
     void signOut();
-
-    void insertUserRatingRecord(String name, int score);
 
     interface SignOutListener {
         void onUserInstanceReceived(FirebaseAuth mAuth);
@@ -31,15 +27,12 @@ public interface UserAuthRepository {
 
         void onSignInError();
 
-        void onRegisterError();
-
         void showInvalidPasswordError();
-
-        void showNoInternetConnectionError();
-
-        void showWeakPasswordError();
-
-        void onAnonymousSignIn();
     }
 
+    interface SignUpListener {
+        void onSignUpSuccessful(String userId);
+
+        void onSignUpError();
+    }
 }

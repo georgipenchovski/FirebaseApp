@@ -1,15 +1,18 @@
 package com.example.vscandroid.firebaseapp.fragments;
 
 import android.support.design.button.MaterialButton;
+import android.util.Log;
+import android.view.View;
 
 import com.example.vscandroid.firebaseapp.R;
+import com.example.vscandroid.firebaseapp.activities.MainActivity;
 
-import butterknife.BindView;
-import butterknife.OnClick;
+public class AccountFragment extends BaseFragment{
 
-public class AccountFragment extends BaseFragment {
+    private static final String TAG = "AccountFragment";
+    private MainActivity activity;
 
-    @BindView(R.id.sign_out_btn)MaterialButton signOutBtn;
+    MaterialButton signOutBtn;
 
     public static AccountFragment newInstance() {
         return new AccountFragment();
@@ -22,12 +25,15 @@ public class AccountFragment extends BaseFragment {
 
     @Override
     protected void onViewCreated() {
+        Log.d(TAG, "AccountFragment onViewCreated: exec");
+        activity = (MainActivity) getActivity();
 
+        signOutBtn = getLayoutView().findViewById(R.id.sign_out_btn);
+        signOutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.signOut();
+            }
+        });
     }
-
-    @OnClick(R.id.sign_out_btn)
-    public void signOutClicked() {
-
-    }
-
 }

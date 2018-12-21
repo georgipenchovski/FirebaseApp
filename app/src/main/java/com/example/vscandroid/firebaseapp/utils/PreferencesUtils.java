@@ -9,7 +9,7 @@ import javax.inject.Inject;
 
 public class PreferencesUtils {
 
-    private static final String PREF_FILE_NAME = "safe_net_prefs";
+    private static final String PREF_FILE_NAME = "firebase_app";
     private static SharedPreferences sPref;
 
     @Inject

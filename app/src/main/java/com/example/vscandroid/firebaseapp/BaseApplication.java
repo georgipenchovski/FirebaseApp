@@ -17,13 +17,13 @@ public class BaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mAppContext = getApplicationContext();
-
+        MultiDex.install(this);
     }
 
-//    public static BaseApplication get(Context context) {
-//        return (BaseApplication) context.getApplicationContext();
-//
-//    }
+    public static BaseApplication get(Context context) {
+        return (BaseApplication) context.getApplicationContext();
+
+    }
 
     public ApplicationComponent getComponent() {
         if (mApplicationComponent == null) {

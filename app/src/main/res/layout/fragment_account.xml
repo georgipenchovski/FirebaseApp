@@ -17,8 +17,9 @@
         android:background="@color/colorPrimary"
         android:text="@string/btn_sign_out"
         android:textColor="@android:color/black"
-        android:textStyle="bold"
+        android:textStyle="bold" >
         app:icon="@drawable/ic_backspace_white_24dp"
-        app:rippleColor="@color/colorPrimaryDark" />
+        app:rippleColor="@color/colorPrimaryDark"
+    </android.support.design.button.MaterialButton>
 
 </LinearLayout>

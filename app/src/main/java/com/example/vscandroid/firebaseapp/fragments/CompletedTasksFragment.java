@@ -3,8 +3,9 @@ package com.example.vscandroid.firebaseapp.fragments;
 
 import com.example.vscandroid.firebaseapp.R;
 
-
 public class CompletedTasksFragment extends BaseFragment {
+
+    private static final String TAG = "CompletedTasksFragment";
 
     public static CompletedTasksFragment newInstance() {
         return new CompletedTasksFragment();
@@ -17,7 +18,6 @@ public class CompletedTasksFragment extends BaseFragment {
 
     @Override
     protected void onViewCreated() {
-
     }
 
 }
