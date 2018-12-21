@@ -56,6 +56,21 @@ public class LoginUsecase {
         };
     }
 
+    public void checkForLoggedUser() {
+        userAuthRepository.addCheckUserListener(new UserAuthRepository.CheckUserListener() {
+            @Override
+            public void userLoggedSuccessful() {
+                viewListener.showLoginSuccess();
+            }
+
+            @Override
+            public void userLoggedError() {
+                // user is not logged
+            }
+        });
+        userAuthRepository.checkForLoggedUser();
+    }
+
     public interface ViewListener {
 
         void showInvalidPasswordLengthError();

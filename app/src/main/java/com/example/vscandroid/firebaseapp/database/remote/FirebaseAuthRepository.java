@@ -3,7 +3,6 @@ package com.example.vscandroid.firebaseapp.database.remote;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.example.vscandroid.firebaseapp.activities.LoginActivity;
 import com.example.vscandroid.firebaseapp.domain.UserAuthRepository;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -21,6 +20,7 @@ public class FirebaseAuthRepository implements UserAuthRepository {
     private SignInListener signInListener;
     private SignUpListener signUpListener;
     private ResetPasswordListener resetPasswordListener;
+    private CheckUserListener checkUserListener;
 
     @Override
     public void registerUser(final String email, final String password, final String username, final String phoneNumber) {
@@ -35,7 +35,6 @@ public class FirebaseAuthRepository implements UserAuthRepository {
                         }
                     }
                 });
-
     }
 
     @Override
@@ -148,5 +147,19 @@ public class FirebaseAuthRepository implements UserAuthRepository {
     public void addResetPasswordListener(ResetPasswordListener resetPasswordListener) {
         this.resetPasswordListener = resetPasswordListener;
 //        authenticator.addAuthStateListener(authStateListener);
+    }
+
+    @Override
+    public void addCheckUserListener(CheckUserListener checkUserListener) {
+        this.checkUserListener = checkUserListener;
+    }
+
+    @Override
+    public void checkForLoggedUser() {
+        if (authenticator.getCurrentUser() != null) {
+            checkUserListener.userLoggedSuccessful();
+        } else {
+            checkUserListener.userLoggedError();
+        }
     }
 }

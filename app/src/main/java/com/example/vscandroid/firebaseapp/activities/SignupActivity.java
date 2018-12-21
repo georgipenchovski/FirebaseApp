@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.vscandroid.firebaseapp.R;
+import com.example.vscandroid.firebaseapp.databinding.ActivitySignupBinding;
 import com.example.vscandroid.firebaseapp.domain.usecases.SignUpUsecase;
 import com.example.vscandroid.firebaseapp.injection.component.ActivityComponent;
 import com.google.firebase.auth.FirebaseAuth;
@@ -17,61 +18,37 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class SignUpActivity extends BaseActivity implements SignUpUsecase.ViewListener {
+public class SignUpActivity extends BaseActivity<ActivitySignupBinding> implements SignUpUsecase.ViewListener {
 
     @Inject SignUpUsecase usecase;
-
-    @BindView(R.id.username) EditText inputUsername;
-    @BindView(R.id.email) EditText inputEmail;
-    @BindView(R.id.password) EditText inputPassword;
-    @BindView(R.id.conf_password) EditText inputConfPassword;
-    @BindView(R.id.phone) EditText inputPhone;
-    @BindView(R.id.sign_in_button) MaterialButton btnSignIn;
-    @BindView(R.id.sign_up_button) MaterialButton btnSignUp;
-    @BindView(R.id.btn_reset_password) MaterialButton btnResetPassword;
-    @BindView(R.id.progressBar) ProgressBar progressBar;
-
-  //  private FirebaseAuth auth;
-
 
     @Override
     protected void onViewCreated() {
         usecase.setViewListener(this);
-  //      auth = FirebaseAuth.getInstance();
 
-        btnSignIn = findViewById(R.id.sign_in_button);
-        btnSignUp = findViewById(R.id.sign_up_button);
-        inputUsername = findViewById(R.id.username);
-        inputEmail = findViewById(R.id.email);
-        inputPhone = findViewById(R.id.phone);
-        inputPassword = findViewById(R.id.password);
-        inputConfPassword = findViewById(R.id.conf_password);
-        progressBar = findViewById(R.id.progressBar);
-        btnResetPassword = findViewById(R.id.btn_reset_password);
-
-        btnResetPassword.setOnClickListener(new View.OnClickListener() {
+        binding.btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(SignUpActivity.this, ResetPasswordActivity.class));
             }
         });
 
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
+        binding.signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
+        binding.signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final String username = inputUsername.getText().toString().trim();
-                final String email = inputEmail.getText().toString().trim();
-                final String phoneNumber = inputPhone.getText().toString().trim();
-                final String password = inputPassword.getText().toString().trim();
-                String confPass = inputConfPassword.getText().toString().trim();
+                final String username = binding.username.getText().toString().trim();
+                final String email = binding.email.getText().toString().trim();
+                final String phoneNumber = binding.phone.getText().toString().trim();
+                final String password = binding.password.getText().toString().trim();
+                String confPass = binding.confPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(username)) {
                     Toast.makeText(getApplicationContext(), "Enter username!", Toast.LENGTH_SHORT).show();
                     return;
@@ -123,7 +100,7 @@ public class SignUpActivity extends BaseActivity implements SignUpUsecase.ViewLi
     @Override
     protected void onResume() {
         super.onResume();
-        progressBar.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
     }
 
 
@@ -134,9 +111,9 @@ public class SignUpActivity extends BaseActivity implements SignUpUsecase.ViewLi
 
     @Override
     public void showRegistrationSuccess() {
-        String username = inputUsername.getText().toString().trim();
-        String userPhone = inputPhone.getText().toString().trim();
-        String userEmail = inputEmail.getText().toString().trim();
+        String username = binding.username.getText().toString().trim();
+        String userPhone = binding.phone.getText().toString().trim();
+        String userEmail = binding.email.getText().toString().trim();
         usecase.addUser(username, userPhone, userEmail);
     }
 
@@ -150,11 +127,11 @@ public class SignUpActivity extends BaseActivity implements SignUpUsecase.ViewLi
 
     @Override
     public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
+        binding.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.GONE);
     }
 }

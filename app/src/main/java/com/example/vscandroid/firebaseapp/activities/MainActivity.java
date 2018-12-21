@@ -6,9 +6,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.example.vscandroid.firebaseapp.R;
+import com.example.vscandroid.firebaseapp.databinding.ActivityMainBinding;
 import com.example.vscandroid.firebaseapp.domain.usecases.MainUsecase;
 import com.example.vscandroid.firebaseapp.fragments.AccountFragment;
 import com.example.vscandroid.firebaseapp.fragments.CompletedTasksFragment;
@@ -17,26 +17,19 @@ import com.example.vscandroid.firebaseapp.injection.component.ActivityComponent;
 
 import javax.inject.Inject;
 
-import butterknife.BindView;
 
-public class MainActivity extends BaseActivity implements MainUsecase.ViewListener {
+public class MainActivity extends BaseActivity<ActivityMainBinding> implements MainUsecase.ViewListener {
 
     private static final String TAG = "MainActivity";
 
-    BottomNavigationView bottomNavigationView;
-
-    FrameLayout frameLayout;
     @Inject MainUsecase usecase;
 
     @Override
     protected void onViewCreated() {
-        frameLayout = findViewById(R.id.main_frame);
-
-        bottomNavigationView = findViewById(R.id.main_nav_bar);
-        bottomNavigationView.setOnNavigationItemSelectedListener(
+        binding.mainNavBar.setOnNavigationItemSelectedListener(
                 onNavigationItemSelectedListener);
         usecase.setViewListener(this);
-        bottomNavigationView.setSelectedItemId(R.id.nav_account);
+        binding.mainNavBar.setSelectedItemId(R.id.nav_account);
     }
 
     @Override
