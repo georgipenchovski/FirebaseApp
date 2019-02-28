@@ -29,11 +29,13 @@ public class AccountFragment extends BaseFragment{
         activity = (MainActivity) getActivity();
 
         signOutBtn = getLayoutView().findViewById(R.id.sign_out_btn);
+
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.signOut();
             }
         });
+
     }
 }
